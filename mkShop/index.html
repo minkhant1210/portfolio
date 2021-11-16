@@ -1,0 +1,549 @@
+<reference path="typings/globals/jquery/index.d.ts" />
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="vendor/bootstrap-4.5.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="vendor/font_awsome/css/all.css">
+    <title>Add to Cart</title>
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+        .loader-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            /* position: fixed; */
+            background-color: white;
+            z-index: 2000;
+        }
+          .loader {
+            color: #1a129f;
+            font-size: 90px;
+            text-indent: -9999em;
+            overflow: hidden;
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            margin: 72px auto;
+            position: relative;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+            animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+          }
+          @-webkit-keyframes load6 {
+            0% {
+              box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+            5%,
+            95% {
+              box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+            10%,
+            59% {
+              box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+            }
+            20% {
+              box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+            }
+            38% {
+              box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+            }
+            100% {
+              box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+          }
+          @keyframes load6 {
+            0% {
+              box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+            5%,
+            95% {
+              box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+            10%,
+            59% {
+              box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+            }
+            20% {
+              box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+            }
+            38% {
+              box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+            }
+            100% {
+              box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+          }
+          @-webkit-keyframes round {
+            0% {
+              -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+            }
+            100% {
+              -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+            }
+          }
+          @keyframes round {
+            0% {
+              -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+            }
+            100% {
+              -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+            }
+          }
+        .product{
+            margin-top: 50px;
+            border: none;
+            margin-bottom: 30px !important;
+        }
+        .product:hover img{
+            transform: scale(1.05) rotate(20deg);
+        }
+        .product img{
+            height: 130px;
+            width: auto;
+            margin-bottom: -50px !important;
+            margin-left: 1rem;
+            transition: 0.5s;
+        }
+        .img-in-cart{
+          height: 40px;
+        }
+        .overflow-scroll{
+          overflow-y: scroll;
+          overflow-x: hidden;
+        }
+
+      ::-webkit-scrollbar{
+          width: 5px;
+      }
+      ::-webkit-scrollbar-track{
+          /* border: 5px solid #283a4d; */
+          box-shadow: inset 0 0 15px #a6b4c2;
+      }
+      ::-webkit-scrollbar-thumb{
+          background: linear-gradient(#eecda3,#4f2738);
+          border-radius: 25px;
+      }
+
+      @media screen and (max-width: 540px){
+        .product img{
+          height: 300px;
+          width: auto;
+        }
+        .shop{
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: start !important;
+          align-items: center !important;
+          position: static !important;
+        }
+        .phone-title h1{
+          margin-bottom: 0px;
+        }
+        .phone-title{
+          margin-bottom: 20px;
+        }
+        .phone-search{
+          margin-left: 50px !important;
+        }
+        .phone-search .phone-input{
+          margin-bottom: 20px !important;
+        }
+
+        .phone-cart{
+          background-color: #f5f5f5;
+          
+        }
+        #cart{
+          box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        }
+      }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10">
+                <div>
+                    <div class="row">
+                        <div class="col-12 col-md-8 border-right min-vh-100 mt-3 mb-3">
+                          <div class="vh-100 overflow-scroll pr-3">
+                            <div class="shop d-flex justify-content-md-between align-items-end mb-3 position-sticky bg-white p-3" style="top: 0px; z-index: 10;">
+                                <div class="phone-title">
+                                    <h4 class="text-primary font-weight-bolder">My Shop</h4>
+                                    <small class="text-black-50">Bootstrap and JQuery</small>
+                                </div>
+                                <div>
+                                    <div class="form-row phone-search">
+                                        <div class="mr-2 phone-input">
+                                            <input type="text" class="form-control" placeholder="Search" id="search">
+                                        </div>
+                                        <div class="">
+                                            <select name="" id="category" class="custom-select">
+                                                <option value="">All Categories</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="loader-container" style="z-index: 2000;">
+                              <div class="loader"></div>
+                            </div>
+                            <div class="card-columns" id="products">
+                                <!-- <div class="product card">
+                                    <img src="${product.image}" alt="" class="card-img-top">
+                                    <div class="card-body border mb-5">
+                                        <p class="card-title text-primary mt-5">
+                                            ${product.title}
+                                        </p>
+                                        <small class="text-black-50">
+                                            ${product.description}
+                                        </small>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div class="">
+                                            <p>
+                                                ${product.price}
+                                            </p>
+                                        </div>
+                                        <div class="">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                Add<i class="fas fa-cart-plus"></i>
+                                            </button> 
+                                        </div>
+                                    </div>
+                                </div> -->
+                                
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                           <div class="vh-100 overflow-scroll p-3 phone-cart">
+                            <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+                              <div>
+                                  <h4 class="text-primary font-weight-bolder">My Chart</h4>
+                                  <small class="text-black-50">Add items</small>
+                              </div>
+                              <div>
+                                <h4>
+                                  <span class="text-black-50 item-in-cart-count">0</span>
+                                  <i class="fas fa-shopping-cart text-primary"></i>
+                                </h4>
+                              </div>
+                            </div>
+                            <div id="cart">
+                              
+                            </div>
+                            <div class="d-flex justify-content-between px-3 position-sticky py-3 bg-white" style="bottom: 0;" id="total">
+                              
+                            </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                            
+
+
+
+<script src="vendor/jquery-3.3.1.min.js"></script>
+<script>
+
+    // loader
+    $(window).on("load", function(){
+      $(".loader-container").fadeOut(500, function(){
+        $(this).remove();
+      })
+    });
+
+    let products = [];
+    let catagories = [];
+
+    // to short product description 
+    function toShort(str, max=50){
+        if(str.length > max){
+            return str.substring(0,max) + "..."
+        }
+        return str;
+    };
+
+    // to show products 
+    function toShow(x){
+      $("#products").empty();
+      x.map(product => {
+          $("#products").append(`
+
+          <div class="product card">
+              <img src="${product.image}" alt="" class="card-img-top">
+              <div class="card-body pt-5 shadow-sm">
+                  <p class="card-title text-primary text-nowrap overflow-hidden mt-5">
+                      ${product.title}
+                  </p>
+                  <small class="text-black-50">
+                      ${toShort(product.description, 120)}
+                  </small>
+                  <div class="d-flex justify-content-between align-items-end mt-2">
+                      <div class="">
+                          <span class="text-primary">
+                             $${product.price}
+                          </span>
+                      </div>
+                      <div class="">
+                          <button class="btn btn-sm btn-outline-primary add-to-cart" data-id=${product.id}>
+                              Add <i class="fas fa-cart-plus"></i>
+                          </button> 
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          `)
+      })
+      }
+      // to get total price for carts 
+    function cartTotal(){
+
+      let count = $(".item-in-cart-cost").length
+
+      if(count > 0 ){
+        $(".item-in-cart-count").html(count);
+
+        let totalCost = $(".item-in-cart-cost").toArray().map(el => el.innerHTML).reduce((x,y) => Number(x)+Number(y));
+        // console.log(totalCost);
+        $("#total").html(`
+      
+          <h4>Total</h4>
+          <h4 class="text-primary">$ ${Number(totalCost).toFixed(2)}</h4>
+      
+        `)
+      }else{
+        $(".item-in-cart-count").html("0");
+        $("#total").html(`
+        
+          <h4 class="text-primary text-center">Empty cart</h4>
+
+        `)
+      }
+    }
+
+    // to get products
+    $.get("https://fakestoreapi.com/products",function(data){
+        products = data;
+        // console.log(products);
+        toShow(products);
+    });
+
+    // to filter in search
+    $("#search").on("keyup", function(){
+      let keyWord = $(this).val().toLowerCase();
+      let filterProducts = products.filter(product => {
+        if(product.title.toLowerCase().indexOf(keyWord)>-1 || product.description.toLowerCase().indexOf(keyWord)>-1 || product.price == keyWord){
+          return product;
+        }
+      });
+      toShow(filterProducts);
+    });
+
+    // to get categories
+    $.get("https://fakestoreapi.com/products/categories",function(data){
+      // console.log(data);
+      catagories = data;
+      catagories.map(category => {
+        $("#category").append(`
+
+          <option value="${category}">${category}</option>
+
+        `)
+      })
+    });
+
+    // to insert categories
+    $("#category").on("change",function(){
+      let selectedCategory = $(this).val();
+      // console.log(selectedCategory != "")
+      if(selectedCategory != ""){
+        let filterCategory = products.filter(product => {
+          if(product.category == selectedCategory){
+            return product;
+          }
+        });
+        toShow(filterCategory);
+      }else{
+        toShow(products);
+      }
+    });
+
+    // $("#products").delegate(".add-to-cart","click",function(){
+
+    //   let currentItemId = $(this).attr("data-id");
+    //   // console.log(currentItemId);
+    //   let addedProduct = products.filter(el => el.id == currentItemId)
+
+    //   $("#cart").append(`
+      
+    //   <div class="card border-0 item-in-cart">
+    //     <div class="card-body">
+    //       <div class="d-flex justify-content-between align-items-end">
+    //         <img src="" alt="" class="img-in-cart">
+    //         <button class="btn btn-outline-danger">
+    //           <i class="fas fa-trash-alt"></i>
+    //         </button>
+    //       </div>
+    //       <p>
+    //         this is item
+    //       </p>
+    //       <div class="d-flex justify-content-between align-items-end">
+    //         <div class="form-row">
+    //           <button class="btn btn-sm btn-outline-primary">
+    //             <i class="fas fa-minus"></i>
+    //           </button>
+    //           <input type="number" class="form-control w-25 mx-2">
+    //           <button class="btn btn-sm btn-outline-primary">
+    //             <i class="fas fa-plus"></i>
+    //           </button>
+    //         </div>
+    //         <p class="mb-0">
+    //           $<span>123</span>
+    //         </p>
+    //       </div>
+    //       <hr>
+    //     </div>
+    //   </div>
+
+    //   `)
+
+    // })
+
+    // to show carts 
+    $("#products").delegate(".add-to-cart","click", function(){
+      let clickedproductId = $(this).attr("data-id");
+      // console.log(clickedproductId);
+      let productInfo = products.filter(el => el.id == clickedproductId)[0];
+      // console.log(productInfo);
+
+
+      if($(".item-in-cart").toArray().map(el => el.getAttribute("data-id")).includes(clickedproductId) ){
+        alert("already added");
+      }else{
+
+        $("#cart").append(`
+      
+          <div class="card border-0 item-in-cart" data-id="${productInfo.id}">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-end mb-3">
+                <img src="${productInfo.image}" alt="" class="img-in-cart">
+                <button class="btn btn-outline-danger remove-from-cart">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+              <p class="text-black-50">
+                ${productInfo.title}
+              </p>
+              <div class="d-flex justify-content-between align-items-end">
+                <div class="form-row">
+                  <button class="btn btn-sm btn-outline-primary quantity-minus">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <input type="number" class="form-control w-25 mx-2 quantity" unitPrice="${productInfo.price}" value="1" min="1">
+                  <button class="btn btn-sm btn-outline-primary quantity-plus">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <p class="mb-0 text-primary">
+                  $<span class="item-in-cart-cost">${productInfo.price}</span>
+                </p>
+              </div>
+              <hr>
+            </div>
+          </div>
+
+        `)
+        cartTotal();
+      };
+      
+    });
+
+    // to delete carts 
+    $("#cart").delegate(".remove-from-cart","click",function(){
+        $(this).parentsUntil("#cart").remove();
+        cartTotal();
+    });
+
+    // to press plus btn 
+    $("#cart").delegate(".quantity-plus","click",function(){
+      let q = $(this).siblings(".quantity").val()
+      let newQ = Number(q)+1;
+      let p = $(this).siblings(".quantity").attr("unitPrice");
+      let newCost = p * newQ
+      // console.log(newCost)
+      // console.log(newQ);
+      $(this).siblings(".quantity").val(newQ);
+      $(this).parent().siblings("p").find(".item-in-cart-cost").html(newCost.toFixed(2));
+      cartTotal();
+    });
+
+    // to press minus btn 
+    $("#cart").delegate(".quantity-minus","click",function(){
+      let q = $(this).siblings(".quantity").val()
+      let p = $(this).siblings(".quantity").attr("unitPrice");
+      if(q > 1){
+        let newQ = Number(q)-1;
+        let newCost = p * newQ
+        // console.log(newCost)
+        // console.log(newQ);
+        $(this).siblings(".quantity").val(newQ);
+        $(this).parent().siblings("p").find(".item-in-cart-cost").html(newCost.toFixed(2));
+        cartTotal();
+      }
+    });
+
+    // to type in inpute 
+    $("#cart").delegate(".quantity","keyup change",function(){
+      let q = $(this).val()
+      let p = $(this).attr("unitPrice");
+      if(q >= 1){
+        let newQ = Number(q);
+        let newCost = p * newQ
+        // console.log(newCost)
+        // console.log(newQ);
+        $(this).siblings(".quantity").val(newQ);
+        $(this).parent().siblings("p").find(".item-in-cart-cost").html(newCost.toFixed(2));
+        cartTotal();
+      }else{
+        alert("you need to buy at least 1")
+      }
+    });
+
+      
+
+
+
+
+
+
+
+    
+
+
+</script>
+</body>
+</html>

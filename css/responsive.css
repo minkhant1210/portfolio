@@ -1,0 +1,114 @@
+@media screen and (max-width: 990px) {
+    .service-section .service-item,
+    .portfolio-section .portfolio-item{
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .portfolio-popup .description,
+    .portfolio-popup .info,
+    .about-section .skills .skill-item,
+    .about-section .about-img,
+    .about-section .about-info,
+    .home-section .home-text,
+    .home-section .home-img {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .home-section .home-text{
+        text-align: center;
+    }
+    .home-section .full-screen{
+        padding: 100px 0;
+    }
+    .home-section .home-img .img-box{
+        margin-bottom: 40px;
+        max-width: 350px;
+    }
+    .effect-3{
+        margin-top: -30px;
+    }
+    .effect-4{
+        right: 20%;
+    }
+
+    .about-section .about-info{
+        order: 2;
+    }
+    .about-section .about-img{
+        margin: 0 auto 30px;
+        max-width: 400px;
+    }
+    .about-section .timeline .timeline-item:nth-child(odd) {
+        padding-right: 15px;
+        text-align: left;
+        padding-left: 75px;
+    }
+    .about-section .timeline .timeline-item:nth-child(even){
+        padding-left: 75px;
+    }
+    .about-section .timeline:before {
+        left: 35px;
+    }
+    .about-section .timeline .timeline-item:nth-child(odd) .icon{
+        right: auto;
+        left: -60px;
+    }
+    .about-section .timeline .timeline-item:nth-child(even) .icon{
+        right: auto;
+        left: -60px;
+    }
+    .about-section .timeline .timeline-item{
+        margin-bottom: 40px;
+    }
+    .about-section .timeline .timeline-item:last-child{
+        margin-bottom: 0;
+    }
+    .about-section .timeline .timeline-item:nth-child(odd) .timeline-item-inner:before{
+        left: -30px;
+        right: auto;
+    }
+
+    .contact-section .contact-item {
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin: auto;
+        padding: 15px;
+        display: flex;
+    }
+    .contact-section .w-50{
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 0 15px;
+    }
+}
+@media screen and (max-width: 615px){
+    .service-section .service-item{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .contact-section .contact-item,
+    .portfolio-section .portfolio-item{
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin: auto;
+        padding: 15px;
+        display: flex;
+    }
+}
+@media screen and (max-width: 574px) {
+    .home-section .home-img .img-box{
+        max-width: 260px;
+        margin-bottom: 0;
+    }
+    .home-section .home-text h2{
+        font-size: 40px;
+    }
+    .contact-section .submit-btn{
+        text-align: center;
+    }
+
+}
+
